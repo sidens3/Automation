@@ -20,38 +20,60 @@ public class YandexSearchPageTest {
 
     @Test //выводится значение погоды
     public void testGetWeatherInfo() {
-        setWordOnYandexSearchField("погода");
-        System.out.println(getStringBySelector("body .mini-suggest__item_type_fact[data-type='fact']"));
+        String searchWord = "погода";
+        setWordOnYandexSearchField(searchWord);
+        String output = getStringBySelector("body .mini-suggest__item_type_fact[data-type='fact']");
+        System.out.println(output);
+        assert output.contains(searchWord);
     }
 
     @Test //выводится первая строчка из всплывающего окна поиска по слову погода
     public void testGetWeatherFirstLine() {
+        String searchWord = "погода";
         setWordOnYandexSearchField("погода");
-        System.out.println(getStringBySelector("body .mini-suggest__popup-content [data-index='0']"));
+        String output = getStringBySelector("body .mini-suggest__popup-content [data-index='0']");
+        System.out.println(output);
+        assert output.contains(searchWord);
     }
 
     @Test //выводится первая строчка из всплывающего окна поиска по слову липецк
     public void testGetLipetskFirstLine() {
+        String searchWord = "липецк";
         setWordOnYandexSearchField("липецк");
-        System.out.println(getStringBySelector("body .mini-suggest__popup-content [data-index='0']"));
+        String output =getStringBySelector("body .mini-suggest__popup-content [data-index='0']");
+        System.out.println(output);
+        assert output.contains(searchWord);
     }
 
+    //todo написать яндексу про бажку
     @Test //выводится первая строчка из всплывающего окна поиска по слову Липецк
+    @Ignore
     public void testGetCapitalLipetskFirstLine() {
+        String searchWord = "Липецк";
         setWordOnYandexSearchField("Липецк");
-        System.out.println(getStringBySelector("body .mini-suggest__popup-content [data-index='0']"));
+        String output = getStringBySelector("body .mini-suggest__popup-content [data-index='0']");
+        System.out.println(output);
+        assert output.contains(searchWord);
     }
 
-    @Test
+    @Test //выводится первая строчка из всплывающего окна поиска по слову лото
     public void testGetLotoFirstLine() {
+        String searchWord = "лото";
         setWordOnYandexSearchField("лото");
-        System.out.println(getStringBySelector("body .mini-suggest__popup-content [data-index='0']"));
+        String output = getStringBySelector("body .mini-suggest__popup-content [data-index='0']");
+        System.out.println(output);
+        assert output.contains(searchWord);
     }
 
-    @Test
+    //todo написать яндексу про бажку
+    @Test //выводится первая строчка из всплывающего окна поиска по слову Лото
+    @Ignore
     public void testGetCapitalLotoFirstLine() {
+        String searchWord = "Лото";
         setWordOnYandexSearchField("Лото");
-        System.out.println(getStringBySelector("body .mini-suggest__popup-content [data-index='0']"));
+        String output = getStringBySelector("body .mini-suggest__popup-content [data-index='0']");
+        System.out.println(output);
+        assert output.contains(searchWord);
     }
 
     @After
