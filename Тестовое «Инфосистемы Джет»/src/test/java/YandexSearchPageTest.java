@@ -10,10 +10,11 @@ public class YandexSearchPageTest {
 
     @Before
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "src\\main\\drivers\\WinChromeDriver80\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src\\test\\drivers\\WinChromeDriver80\\chromedriver.exe");
         driver = new ChromeDriver();
         baseUrl = "https://yandex.ru/";
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.get(baseUrl);
     }
 
     @Test //выводится значение погоды
@@ -28,7 +29,7 @@ public class YandexSearchPageTest {
     @Test //выводится первая строчка из всплывающего окна поиска по слову погода
     public void testGetWeatherFirstLine() {
         String searchWord = "погода";
-        setWordOnYandexSearchField("погода");
+        setWordOnYandexSearchField(searchWord);
         String output = getStringBySelector("body .mini-suggest__popup-content [data-index='0']");
         System.out.println(output);
         assert output.contains(searchWord);
@@ -37,7 +38,7 @@ public class YandexSearchPageTest {
     @Test //выводится первая строчка из всплывающего окна поиска по слову липецк
     public void testGetLipetskFirstLine() {
         String searchWord = "липецк";
-        setWordOnYandexSearchField("липецк");
+        setWordOnYandexSearchField(searchWord);
         String output = getStringBySelector("body .mini-suggest__popup-content [data-index='0']");
         System.out.println(output);
         assert output.contains(searchWord);
@@ -48,7 +49,7 @@ public class YandexSearchPageTest {
     @Ignore
     public void testGetCapitalLipetskFirstLine() {
         String searchWord = "Липецк";
-        setWordOnYandexSearchField("Липецк");
+        setWordOnYandexSearchField(searchWord);
         String output = getStringBySelector("body .mini-suggest__popup-content [data-index='0']");
         System.out.println(output);
         assert output.contains(searchWord);
@@ -57,7 +58,7 @@ public class YandexSearchPageTest {
     @Test //выводится первая строчка из всплывающего окна поиска по слову лото
     public void testGetLotoFirstLine() {
         String searchWord = "лото";
-        setWordOnYandexSearchField("лото");
+        setWordOnYandexSearchField(searchWord);
         String output = getStringBySelector("body .mini-suggest__popup-content [data-index='0']");
         System.out.println(output);
         assert output.contains(searchWord);
@@ -68,7 +69,7 @@ public class YandexSearchPageTest {
     @Ignore
     public void testGetCapitalLotoFirstLine() {
         String searchWord = "Лото";
-        setWordOnYandexSearchField("Лото");
+        setWordOnYandexSearchField(searchWord);
         String output = getStringBySelector("body .mini-suggest__popup-content [data-index='0']");
         System.out.println(output);
         assert output.contains(searchWord);
@@ -82,7 +83,6 @@ public class YandexSearchPageTest {
 
     @Test //вкладка Картинки располагается на нужном месте
     public void testCorrectLocationTabImages(){
-        driver.get(baseUrl);
         Point tabImagesPoint = driver.findElement(By.cssSelector("body .home-arrow__tabs [data-id=\"images\"]")).getLocation();
         System.out.println(tabImagesPoint.toString());
         assert (tabImagesPoint.x == 247) && (tabImagesPoint.y == 244);
@@ -90,13 +90,11 @@ public class YandexSearchPageTest {
 
     @Test // вкладка Картанки имеет соответствующее название
     public void testCorrectNameTabImages() {
-        driver.get(baseUrl);
         assert driver.findElement(By.cssSelector("body .home-arrow__tabs [data-id=\"images\"]")).getText().equals("Картинки");
     }
 
     @Test  //вкладка Картанки имеет нужный размер
     public void testSizeTabImages() {
-        driver.get(baseUrl);
         Integer imagesTabHeight =  driver.findElement(By.cssSelector("body .home-arrow__tabs [data-id=\"images\"]")).getSize().getHeight();
         Integer imagesTabWidth =  driver.findElement(By.cssSelector("body .home-arrow__tabs [data-id=\"images\"]")).getSize().getWidth();
         assert (imagesTabHeight == 17) && (imagesTabWidth == 64);
@@ -104,7 +102,6 @@ public class YandexSearchPageTest {
 
     @Test //вкладка Картанки находится между вкладками видео и новости
     public void testTabImagesBetweenVideoAndNews() {
-        driver.get(baseUrl);
         Integer tabVideoLocationX = driver.findElement(By.cssSelector("body .home-arrow__tabs [data-id=\"video\"]")).getLocation().getX();
         Integer tabImagesLocationX = driver.findElement(By.cssSelector("body .home-arrow__tabs [data-id=\"images\"]")).getLocation().getX();
         Integer tabNewsLocationX = driver.findElement(By.cssSelector("body .home-arrow__tabs [data-id=\"news\"]")).getLocation().getX();
@@ -114,7 +111,6 @@ public class YandexSearchPageTest {
 
     @Test //вкладка Картанки находится над полем поиск
     public void testTabImagesUnderSearchField() {
-        driver.get(baseUrl);
         Integer tabImagesLocationY = driver.findElement(By.cssSelector("body .home-arrow__tabs [data-id=\"images\"]")).getLocation().getY();
         Integer tabSearchFieldLocationY =   driver.findElement(By.id("text")).getLocation().getY();
         assert tabImagesLocationY < tabSearchFieldLocationY;
@@ -126,7 +122,7 @@ public class YandexSearchPageTest {
     }
 
     private void setWordOnYandexSearchField(String str){
-        driver.get(baseUrl);
+
         driver.findElement(By.id("text")).click();
         driver.findElement(By.id("text")).clear();
         driver.findElement(By.id("text")).sendKeys(str);
